@@ -25,11 +25,16 @@ export const endConversation = async (conversationId: string) => {
 
     return null;
   } catch (error) {
-    if (error.name === 'AbortError') {
-      console.error('Request timed out after 30 seconds');
-      throw new Error('Request timed out. Please try again.');
+    // Check if error is an instance of Error before accessing properties
+    if (error instanceof Error) {
+      if (error.name === 'AbortError') {
+        console.error('Request timed out after 30 seconds');
+        throw new Error('Request timed out. Please try again.');
+      }
     }
-    console.error('Error:', error);
+    // Log the original error regardless of type for debugging
+    console.error('Error ending conversation:', error);
+    // Re-throw the error to be handled by the caller
     throw error;
   }
 };

@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from '../ui/select';
+import { Select, SelectContent, SelectTrigger, SelectItem } from '../ui/select'; // Remove SelectValue
 import { ChevronDown } from 'lucide-react';
 
 export const SelectDevice = ({ value, devices, onChange, Icon }: {

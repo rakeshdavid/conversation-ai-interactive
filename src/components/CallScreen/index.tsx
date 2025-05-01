@@ -42,7 +42,7 @@ export const CallScreen = ({ conversation, handleEnd }: { conversation: IConvers
         <CameraSettings
           actionLabel='Leave Call'
           onAction={handleLeave}
-          className="bg-gradient-to-r from-[rgb(var(--color-pink))] to-[rgb(var(--color-deep-purple))] text-white hover:shadow-md hover:opacity-90 transform hover:scale-[1.02] active:scale-[0.98] px-6 py-3 rounded-md font-semibold"
+          actionVariant="destructive" // Use actionVariant instead of className
         />
       </div>
     </div>

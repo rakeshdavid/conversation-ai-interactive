@@ -7,18 +7,24 @@ import {
   useVideoTrack,
   useAudioTrack,
 } from '@daily-co/daily-react';
-import { Button } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
 import { Mic, Video, Volume2, VideoOff, VideoIcon, MicOff } from 'lucide-react';
 import { SelectDevice } from '../SelectDevice';
+import type { VariantProps } from 'class-variance-authority';
 
-export const CameraSettings = ({ actionLabel, onAction, cancelLabel, onCancel }:
-  {
-    actionLabel?: string,
-    onAction?: () => void,
-    cancelLabel?: string,
-    onCancel?: () => void
-  }
-) => {
+export const CameraSettings = ({
+  actionLabel,
+  onAction,
+  cancelLabel,
+  onCancel,
+  actionVariant // Add actionVariant prop
+}: {
+  actionLabel?: string;
+  onAction?: () => void;
+  cancelLabel?: string;
+  onCancel?: () => void;
+  actionVariant?: VariantProps<typeof buttonVariants>['variant']; // Define type for actionVariant
+}) => {
   const daily = useDaily();
   const {
     currentCam,
@@ -140,16 +146,15 @@ export const CameraSettings = ({ actionLabel, onAction, cancelLabel, onCancel }:
         >
           {cancelLabel}
         </Button>}
-        {actionLabel && <Button
-          onClick={onAction}
-          disabled={getUserMediaError || !currentCam || !currentMic}
-          className="bg-[rgb(var(--color-teal))] hover:bg-[rgb(var(--color-teal-variant-2))] text-white font-semibold transition-all"
-        >
-          <span>
-            <Video className='size-6 mr-2' />
-          </span>
-          {actionLabel}
-        </Button>}
+        {actionLabel && (
+          <Button
+            onClick={onAction}
+            variant={actionVariant || 'default'} // Use actionVariant or default
+            className='px-6 py-3 font-semibold'
+          >
+            {actionLabel}
+          </Button>
+        )}
       </div>
     </div>
   );
