@@ -37,7 +37,11 @@ export const createConversation = async (): Promise<IConversation> => {
     }
     // Log the original error regardless of type for debugging
     console.error('Error creating conversation:', error);
-    // Re-throw the error to be handled by the caller
-    throw error;
+    // Re-throw the error, ensuring it's an Error instance
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw new Error(`An unknown error occurred during conversation creation: ${String(error)}`);
+    }
   }
 };
