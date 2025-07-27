@@ -23,9 +23,6 @@ export const createConversation = async (): Promise<IConversation> => {
           participant_left_timeout: 0,
           enable_closed_captions: true,
           language: "multilingual",
-          recording_s3_bucket: "avatar-recordings-test",
-          recording_s3_bucket_region: "us-east-2",
-          aws_assumed_role_arn: "arn:aws:iam::179227986613:role/CVIRecordingRole"
         }
       }),
       signal: controller.signal
