@@ -15,6 +15,14 @@ export const createConversation = async (): Promise<IConversation> => {
       body: JSON.stringify({
         persona_id: TAVUS_PERSONA_ID, // Use env variable
         replica_id: TAVUS_REPLICA_ID, // Use env variable, can be undefined if not set
+        conversation_name: "Interview with Arvind",
+        custom_greeting: "Hello Arvind",
+        conversational_context: "Arvind is applying for Data Governance role",
+        properties: {
+          participant_left_timeout: 0,
+          enable_closed_captions: true,
+          language: "multilingual"
+        }
       }),
       signal: controller.signal
     });
