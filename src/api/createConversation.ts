@@ -1,4 +1,4 @@
-import { TAVUS_API_KEY } from '@/config';
+import { TAVUS_API_KEY, TAVUS_PERSONA_ID, TAVUS_REPLICA_ID } from '@/config';
 import { IConversation } from '@/types';
 
 export const createConversation = async (): Promise<IConversation> => {
@@ -13,7 +13,8 @@ export const createConversation = async (): Promise<IConversation> => {
         'x-api-key': TAVUS_API_KEY,
       },
       body: JSON.stringify({
-        persona_id: 'p9a95912', // Stock Demo Persona
+        persona_id: TAVUS_PERSONA_ID, // Use env variable
+        replica_id: TAVUS_REPLICA_ID, // Use env variable, can be undefined if not set
       }),
       signal: controller.signal
     });
@@ -21,8 +22,15 @@ export const createConversation = async (): Promise<IConversation> => {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorData}`);
+      let errorData = '';
+      try {
+        errorData = await response.text();
+      } catch (e) {
+        // If reading response text fails, use a generic message
+        errorData = 'Could not retrieve error details from API.';
+      }
+      console.error(`API Error: ${response.status} - ${errorData}`);
+      throw new Error(`Failed to create conversation. Status: ${response.status}, Message: ${errorData || 'No additional error message provided by API.'}`);
     }
 
     const data = await response.json();

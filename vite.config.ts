@@ -15,7 +15,8 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       // Makes Vercel environment variables accessible in client code
-      __APP_ENV__: process.env.VITE_VERCEL_ENV || 'development',
+      // The value must be JSON.stringified to be treated as a string literal by Vite.
+      __APP_ENV__: JSON.stringify(process.env.VITE_VERCEL_ENV || 'development'),
     },
     build: {
       sourcemap: !isProduction,
